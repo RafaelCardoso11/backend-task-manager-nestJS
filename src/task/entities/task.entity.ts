@@ -38,6 +38,12 @@ export class TaskEntity {
   })
   dueDate: Date;
 
+  @Column({
+    type: 'boolean',
+    default: false,
+  })
+  completed: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

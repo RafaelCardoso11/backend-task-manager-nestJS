@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { TaskEntity } from './entities/task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -65,5 +65,36 @@ export class TaskService {
     return {
       message: 'Task deleted successfully',
     };
+  }
+
+  async completeMultipleTask(ids: number[]) {
+    const incompleteTasks = await this.findIncompleteTasksByIds(ids);
+    const idsOfIncompleteTasks = incompleteTasks.map(({ id }) => id);
+
+    await this.taskRepository.update(idsOfIncompleteTasks, {
+      completed: true,
+    });
+
+    const tasksCompleted = incompleteTasks.map((task) => ({
+      ...task,
+      completed: true,
+    }));
+
+    return {
+      data: tasksCompleted,
+      message: 'Tasks completed successfully',
+    };
+  }
+
+  async findIncompleteTasksByIds(ids: number[]) {
+    const incompleteTasks = await this.taskRepository.find({
+      where: { id: In(ids), completed: false },
+    });
+
+    if (!incompleteTasks.length) {
+      throw new NotFoundException(`No pending tasks found with these IDs`);
+    }
+
+    return incompleteTasks;
   }
 }
