@@ -42,7 +42,7 @@ export class TaskController {
     return this.taskService.remove(+id);
   }
 
-  @Patch('completeTasks')
+  @Patch('complete')
   async completeMultipleTask(@Body() { taskIds }: CompleteMultipleTasksDto) {
     return this.taskService.completeMultipleTask(taskIds);
   }
