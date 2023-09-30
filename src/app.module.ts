@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TaskModule } from './task/task.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { TaskEntity } from './task/entities/task.entity';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -15,11 +14,9 @@ import { ConfigModule } from '@nestjs/config';
       port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      entities: [],
+      entities: [TaskEntity],
       synchronize: process.env.ENV === 'development',
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
