@@ -20,7 +20,10 @@ export class TaskService {
 
     await this.taskRepository.save(task);
 
-    return task;
+    return {
+      message: 'Task cadastrada com sucesso!',
+      data: task,
+    };
   }
 
   async findAll() {
@@ -35,7 +38,7 @@ export class TaskService {
     const task = await this.taskRepository.findOne({ where: { id } });
 
     if (!task) {
-      throw new BadRequestException('Task not found');
+      throw new BadRequestException(`Task not found`);
     }
     return {
       data: task,
@@ -46,12 +49,12 @@ export class TaskService {
     const { affected } = await this.taskRepository.update(id, updateTaskDto);
 
     if (!!!affected) {
-      throw new NotFoundException(`Registration for ${id} not found`);
+      throw new NotFoundException(`Task not found`);
     }
 
     return {
       data: updateTaskDto,
-      message: 'Task update successfully',
+      message: 'Task editada com sucesso!',
     };
   }
 
@@ -59,11 +62,11 @@ export class TaskService {
     const { affected } = await this.taskRepository.delete(id);
 
     if (!!!affected) {
-      throw new NotFoundException(`Registration for ${id} not found`);
+      throw new NotFoundException(`Task not found`);
     }
 
     return {
-      message: 'Task deleted successfully',
+      message: 'Task deletada com sucesso!',
     };
   }
 
@@ -82,7 +85,7 @@ export class TaskService {
 
     return {
       data: tasksCompleted,
-      message: 'Tasks completed successfully',
+      message: 'Tasks completada com sucesso!',
     };
   }
 
