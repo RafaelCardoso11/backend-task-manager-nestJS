@@ -1,13 +1,12 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { In, Repository } from 'typeorm';
 import { TaskEntity } from './entities/task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TaskNotFoundException } from 'src/exceptions/taskNotFound.exception';
+import { NoPendingTasksFoundException } from 'src/exceptions/noPendingTasksFound';
+import { CompleteMultipleTasksDto } from './dto/complete-multiple-tasks';
 
 @Injectable()
 export class TaskService {
@@ -38,7 +37,7 @@ export class TaskService {
     const task = await this.taskRepository.findOne({ where: { id } });
 
     if (!task) {
-      throw new BadRequestException(`Task not found`);
+      throw new TaskNotFoundException();
     }
     return {
       data: task,
@@ -49,7 +48,7 @@ export class TaskService {
     const { affected } = await this.taskRepository.update(id, updateTaskDto);
 
     if (!!!affected) {
-      throw new NotFoundException(`Task not found`);
+      throw new TaskNotFoundException();
     }
 
     return {
@@ -62,7 +61,7 @@ export class TaskService {
     const { affected } = await this.taskRepository.delete(id);
 
     if (!!!affected) {
-      throw new NotFoundException(`Task not found`);
+      throw new TaskNotFoundException();
     }
 
     return {
@@ -70,34 +69,39 @@ export class TaskService {
     };
   }
 
-  async completeMultipleTask(ids: number[]) {
-    const incompleteTasks = await this.findIncompleteTasksByIds(ids);
-    const idsOfIncompleteTasks = incompleteTasks.map(({ id }) => id);
+  async completeMultipleTask({ taskCompletions }: CompleteMultipleTasksDto) {
+    const taskIdsToUpdate = taskCompletions.map(({ taskId }) => taskId);
+    const tasksToUpdate = await this.findByIds(taskIdsToUpdate);
 
-    await this.taskRepository.update(idsOfIncompleteTasks, {
-      completed: true,
+    for (const { id, completed } of tasksToUpdate) {
+      await this.updateTaskCompletionStatus(id, completed);
+    }
+
+    const updatedTasks = tasksToUpdate.map((taskToUpdate) => {
+      const taskCompletion = taskCompletions.find(
+        ({ taskId }) => taskId === taskToUpdate.id,
+      );
+      return { ...taskToUpdate, completed: taskCompletion.completed };
     });
 
-    const tasksCompleted = incompleteTasks.map((task) => ({
-      ...task,
-      completed: true,
-    }));
-
     return {
-      data: tasksCompleted,
-      message: 'Tasks completada com sucesso!',
+      data: updatedTasks,
+      message: 'Tasks completadas com sucesso!',
     };
   }
 
-  async findIncompleteTasksByIds(ids: number[]) {
-    const incompleteTasks = await this.taskRepository.find({
-      where: { id: In(ids), completed: false },
+  async findByIds(ids: number[]) {
+    const tasks = await this.taskRepository.find({
+      where: { id: In(ids) },
     });
 
-    if (!incompleteTasks.length) {
-      throw new NotFoundException(`No pending tasks found with these IDs`);
+    if (!tasks.length) {
+      throw new NoPendingTasksFoundException(ids);
     }
 
-    return incompleteTasks;
+    return tasks;
+  }
+  async updateTaskCompletionStatus(id: number, completed: boolean) {
+    await this.taskRepository.update(id, { completed });
   }
 }
