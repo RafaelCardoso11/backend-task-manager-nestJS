@@ -14,6 +14,7 @@ import { TaskEntity } from './task/entities/task.entity';
       port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
+      url: process.env.DB_URL,
       entities: [TaskEntity],
       synchronize: process.env.ENV === 'development',
       migrations: [`${__dirname}/migrations/{.ts,*.js}`],
