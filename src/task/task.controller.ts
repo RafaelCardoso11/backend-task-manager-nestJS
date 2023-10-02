@@ -43,7 +43,7 @@ export class TaskController {
   }
 
   @Patch('complete')
-  async completeMultipleTask(@Body() tasks: CompleteMultipleTasksDto) {
-    return this.taskService.completeMultipleTask(tasks);
+  async updateCompleteMultipleTask(@Body() tasks: CompleteMultipleTasksDto) {
+    return this.taskService.updateCompleteMultipleTask(tasks);
   }
 }
