@@ -16,6 +16,8 @@ import { TaskEntity } from './task/entities/task.entity';
       password: process.env.DB_PASSWORD,
       entities: [TaskEntity],
       synchronize: process.env.ENV === 'development',
+      migrations: [`${__dirname}/migrations/{.ts,*.js}`],
+      migrationsRun: true,
     }),
   ],
 })
