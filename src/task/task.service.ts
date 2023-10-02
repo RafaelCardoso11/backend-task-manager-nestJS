@@ -71,22 +71,16 @@ export class TaskService {
 
   async completeMultipleTask({ taskCompletions }: CompleteMultipleTasksDto) {
     const taskIdsToUpdate = taskCompletions.map(({ taskId }) => taskId);
-    const tasksToUpdate = await this.findByIds(taskIdsToUpdate);
 
-    for (const { id, completed } of tasksToUpdate) {
-      await this.updateTaskCompletionStatus(id, completed);
+    for (const { taskId, completed } of taskCompletions) {
+      await this.updateTaskCompletionStatus(taskId, completed);
     }
 
-    const updatedTasks = tasksToUpdate.map((taskToUpdate) => {
-      const taskCompletion = taskCompletions.find(
-        ({ taskId }) => taskId === taskToUpdate.id,
-      );
-      return { ...taskToUpdate, completed: taskCompletion.completed };
-    });
+    const updatedTasks = await this.findByIds(taskIdsToUpdate);
 
     return {
       data: updatedTasks,
-      message: 'Tasks completadas com sucesso!',
+      message: 'Tasks atualizadas com sucesso!',
     };
   }
 
@@ -102,6 +96,8 @@ export class TaskService {
     return tasks;
   }
   async updateTaskCompletionStatus(id: number, completed: boolean) {
-    await this.taskRepository.update(id, { completed });
+    const update = await this.taskRepository.update(id, { completed });
+
+    console.log(update);
   }
 }
