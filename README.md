@@ -2,72 +2,80 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Task Manager - NestJS + PostgreSQL + Typeorm + Docker
+Aplicação backend desenvolvida com tecnologias modernas e práticas de desenvolvimento, como NestJS, PostgreSQL e Docker, para oferecer um sistema de gerenciamento de tarefas eficiente e escalável.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Deployment
+[Api Task](https://backend-task-manager-nestjs-production.up.railway.app/api/task)
 
-## Installation
 
-```bash
-$ yarn install
-```
+Repositório Frontend
+[Task Manager Frontend](https://github.com/RafaelCardoso11/frontend-task-manager-reactJS)
 
-## Running the app
+É possível no projeto:
+1) Adicionar novas tarefas (Create)
+2) Visualizar novas tarefas (List and ReadOne)
+3) Editar tarefas (Update)
+4) Marcar como concluída as tarefas (Completion)
+
+
+
+## Inicialização do Projeto (Desenvolvimento)
+
+### Pré-requisitos
+
+Certifique-se de que você tenha o Node.js (v18.16.1) e o Yarn(v1.22.19) instalados em sua máquina. Você pode verificar a instalação executando os seguintes comandos no terminal:
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+node -v 
+yarn -v
 ```
 
-## Test
+### Inicialização
+1. **Navegue para a pasta do projeto:** Use o comando `cd` para entrar na pasta do projeto onde está localizado o arquivo `package.json`.
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+cd caminho-para-o-seu-projeto
+```
+2. **Instale as dependências:**
+```bash
+yarn install
+```
+3. **Inicie o servidor de desenvolvimento:**
+```bash
+yarn start:dev
 ```
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Inicialização do Projeto (Produção)
 
-## Stay in touch
+### Pré-requisitos
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Certifique-se de que você tenha o docker instalado em sua máquina.
 
-## License
+```bash
+docker -v
+```
 
-Nest is [MIT licensed](LICENSE).
+### Inicialização
+1. **Navegue para a pasta do projeto:** Use o comando `cd` para entrar na pasta do projeto onde está localizado o arquivo `docker-compose.yml`.
+
+```bash
+cd caminho-para-o-seu-projeto
+```
+3. **Configure as variáveis de ambiente**
+ `exemplo em .env.example`
+2. **Suba os containers**
+```bash
+docker-compose up 
+```
+
+
+``NestJS ``
+``PostgreSQL ``
+``TypeORM ``
+``Typescript ``
+
+Qualquer dúvida estou a disposição.
