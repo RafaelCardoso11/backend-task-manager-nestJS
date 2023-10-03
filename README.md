@@ -5,6 +5,16 @@
 # Task Manager - NestJS + PostgreSQL + Typeorm + Docker
 Aplicação backend desenvolvida com tecnologias modernas e práticas de desenvolvimento, como NestJS, PostgreSQL e Docker, para oferecer um sistema de gerenciamento de tarefas eficiente e escalável.
 
+Tecnologias Utilizadas
+* NestJS (v18.2.0)
+* PostgreSQL (v14.2-alpine)
+* Typescript (v5.1.3)
+* Docker (v20.10.21)
+* pg (v8.11.3)
+* @nestjs/typeorm (v10.0.0)
+* class-transformer (v0.5.1)
+* class-validator (v0.14.0)
+
 
 
 Deployment
